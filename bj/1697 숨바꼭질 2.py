@@ -4,32 +4,20 @@ N,K=map(int,sys.stdin.readline().split())
 
 def bfs(start):
     queue=deque()
-    l=[]
-    queue.append([start])
-    l.append(start)
-    temp=[]
-    cnt=0
+    queue.append(start)
+    temp[start]=0
+
     while queue:
         a=queue.popleft()
-        cnt += 1
-
-        for i in a:
-            if i-1==K or i+1==K or i*2==K:
-                print("유레카",i,l)
-                return cnt
-            if (i-1 not in  l) and i<K :
-                temp.append(i-1)
-                l.append(i-1)
-            if (i+1 not in  l) and i<K:
-                temp.append(i+1)
-                l.append(i+1)
-            if (i*2 not in  l) and i<K :
-                temp.append(i*2)
-                l.append(i*2)
-
-        queue.append(temp)
-        temp=[]
+        for i in [a-1,a+1,a*2]:
+            if -1<i<100001:
+                if temp[i]==0 and i!=start:
+                    temp[i]=temp[a]+1
+                    queue.append(i)
+                if i==K:
+                    return temp[K]
 
 
 
+temp=[0 for i in range(100002)]
 print(bfs(N))
