@@ -1,0 +1,40 @@
+import sys
+
+N=int(sys.stdin.readline())
+A=list(map(int,sys.stdin.readline().split()))
+dp=[0 for _ in range(N)]
+dp[0]=1
+if A[1]>A[0]:
+    dp[1]=dp[0]+1
+else:
+    dp[1]=1
+
+for i in range(2,N):
+    if A[i]>A[i-1]:
+        if A[i] > max(A[:i - 1]):  ##현재 값이 이전 값들 중 가장 큰 값보다 크다면
+            dp[i] = max(dp) + 1  ##가장 큰 배열의 크기에 1 증가
+        else:
+            dp[i] = dp[i - 1] + 1
+    else:
+        dp[i] = 1
+
+print(max(dp))
+
+#반례
+#출력 : 4
+
+# 7
+# 30 40 50 10 20 30 40
+
+# 4
+# 10 10 10 20
+
+# 3
+# 50 40 20
+#
+# 7
+# 1 4 5 2 3 4 5
+
+#1.min 부터 출발해야 한다?? -> 그것도 아님
+
+# print(dp)
